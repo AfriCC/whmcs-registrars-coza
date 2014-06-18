@@ -75,7 +75,7 @@ directly into your WHMCS installation.
 
 ### Config
 
-screenshot
+![whmcs-registrars-coza configuration](https://www.afri.cc/img/whmcs-registrars-coza.png "Configuration Screen")
 
 
 ### Cronjob
@@ -85,8 +85,9 @@ in */etc/cron.d/whmcs*
 ```
 MAILTO=hostmaster@YOURDOMAIN.COM
 
-43 */4 * * * www-data cd /var/www/whmcs/crons; /usr/bin/php domainsync.php > /dev/null
-13 */4 * * * www-data /usr/bin/php /var/www/whmcs/crons/cozapoll.php > /dev/null
+43 */4 * * * www-data cd /var/www/whmcs/crons; php -q domainsync.php > /dev/null
+13 * * * *   www-data php -q /var/www/whmcs/crons/cozapoll.php > /dev/null
+33 * * * *   www-data php -q /var/www/whmcs/crons/cozacleanup.php > /dev/null
 ```
 
 
@@ -103,7 +104,7 @@ llll
 Changelog
 ---------
 
-* 0.1.0 - 2014-06-18
+* 0.1.0 - 2014-06-19
     * Initial Version
 
 
