@@ -11,6 +11,22 @@ registrar modules.
 Released under the GPLv3 License, feel free to contribute (fork, create
 meaningful branchname, issue pull request with thus branchname)!
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [whmcs-registrars-coza](#user-content-whmcs-registrars-coza)
+    - [Features](#user-content-features)
+    - [Requirements](#user-content-requirements)
+    - [Installation](#user-content-installation)
+        - [Upload](#user-content-upload)
+        - [Config](#user-content-config)
+        - [Cronjob](#user-content-cronjob)
+        - [Language Overrides](#user-content-language-overrides)
+        - [Templates](#user-content-templates)
+    - [Changelog](#user-content-changelog)
+    - [Credits](#user-content-credits)
+    - [Acknowledgments](#user-content-acknowledgments)
+    - [License](#user-content-license)
+
 
 Features
 --------
