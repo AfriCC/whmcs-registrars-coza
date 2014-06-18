@@ -18,6 +18,7 @@ meaningful branchname, issue pull request with thus branchname)!
     - [Requirements](#user-content-requirements)
     - [Installation](#user-content-installation)
         - [Upload](#user-content-upload)
+        - [Activate](#user-content-activate)
         - [Config](#user-content-config)
         - [Cronjob](#user-content-cronjob)
         - [Language Overrides](#user-content-language-overrides)
@@ -67,6 +68,11 @@ Upload everything inside the "upload" folder (excluding the folder itself)
 directly into your WHMCS installation.
 
 
+### Activate
+
+
+
+
 ### Config
 
 screenshot
@@ -77,10 +83,10 @@ screenshot
 in */etc/cron.d/whmcs*
 
 ```
-    MAILTO=hostmaster@YOURDOMAIN.COM
-    
-    43 */4 * * * www-data cd /var/www/whmcs/crons; /usr/bin/php domainsync.php > /dev/null
-    13 */4 * * * www-data /usr/bin/php /var/www/whmcs/crons/cozapoll.php > /dev/null
+MAILTO=hostmaster@YOURDOMAIN.COM
+
+43 */4 * * * www-data cd /var/www/whmcs/crons; /usr/bin/php domainsync.php > /dev/null
+13 */4 * * * www-data /usr/bin/php /var/www/whmcs/crons/cozapoll.php > /dev/null
 ```
 
 
