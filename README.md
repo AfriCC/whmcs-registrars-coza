@@ -1,9 +1,9 @@
 whmcs-registrars-coza
 =====================
 
-**whmcs-registrars-coza** is a domain registrar module connecting the CO.ZA
-zone with WHMCS. It uses EPP for communicating with the Registry via the
-php-epp2 library.
+**whmcs-registrars-coza** is a domain registrar module connecting the [CO.ZA](https://www.registry.net.za)
+zone with [WHMCS](https://www.whmcs.com). It uses EPP for communicating with the Registry via the
+[php-epp2](https://github.com/AfriCC/php-epp2) library.
 
 It is written in modern PHP and tries to fix some shortcommings of the existing
 registrar modules.
@@ -48,7 +48,8 @@ Features
 Requirements
 ------------
 
-It uses php-epp2 for the EPP component, so the requirements are basically the same:
+It uses [php-epp2](https://github.com/AfriCC/php-epp2) as EPP client library,
+so it shares the requirements with that package:
 
 * WHMCS 5.3.7 or higher
 * PHP5.4 or higher
@@ -73,7 +74,15 @@ screenshot
 
 ### Cronjob
 
-llllll
+in */etc/cron.d/whmcs*
+
+```
+    MAILTO=hostmaster@YOURDOMAIN.COM
+    
+    43 */4 * * * www-data cd /var/www/whmcs/crons; /usr/bin/php domainsync.php > /dev/null
+    13 */4 * * * www-data /usr/bin/php /var/www/whmcs/crons/cozapoll.php > /dev/null
+```
+
 
 ### Language Overrides
 
@@ -102,7 +111,7 @@ Credits
 Acknowledgments
 ---------------
 
-* Nigel Kukard (original author of whmcs-coza-epp)
+* [Nigel Kukard](https://gitlab.devlabs.linuxassist.net/u/nkukard) (original author of [whmcs-coza-epp](https://gitlab.devlabs.linuxassist.net/awit-whmcs/whmcs-coza-epp))
 * [All Contributors of whmcs-coza-epp](https://gitlab.devlabs.linuxassist.net/awit-whmcs/whmcs-coza-epp/graphs/master)
 
 
