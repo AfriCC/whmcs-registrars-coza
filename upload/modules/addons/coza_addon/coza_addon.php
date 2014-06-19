@@ -15,7 +15,7 @@ function coza_addon_config()
         'name'          => 'CO.ZA EPP Messages',
         'description'   => 'This addon displays EPP poll messages.<br><a href="https://github.com/AfriCC/whmcs-registrars-coza">GitHub</a> | <a href="https://www.registry.net.za">Registry</a>',
         'author'        => '<a href="https://www.afri.cc">AfriCC</a>',
-        'version'       => '0.1.1',
+        'version'       => '0.1.2',
         'language'      => 'english',
         'fields'        => [],
     ];
