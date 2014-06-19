@@ -97,6 +97,11 @@ function coza_GetNameservers($params)
             return ['error' => 'COZA/GetNameservers: unable to fetch nameservers'];
         }
 
+        if (!$response->success()) {
+            unset($epp_client);
+            return ['error' => sprintf('COZA/GetNameservers: %s (%d)', $response->message(), $response->code())];
+        }
+
         $data = $response->data();
         if (empty($data) || !is_array($data) || empty($data['infData']['ns']['hostAttr']) || !is_array($data['infData']['ns']['hostAttr'])) {
             unset($epp_client);
@@ -137,6 +142,11 @@ function coza_SaveNameservers($params)
         if (!($response instanceof \AfriCC\EPP\Frame\Response)) {
             unset($epp_client);
             return ['error' => 'COZA/SaveNameservers: unable to fetch response'];
+        }
+
+        if (!$response->success()) {
+            unset($epp_client);
+            return ['error' => sprintf('COZA/SaveNameservers: %s (%d)', $response->message(), $response->code())];
         }
 
         $data = $response->data();
@@ -532,7 +542,8 @@ function coza_GetContactDetails($params)
 
         $contact = \COZA\Factory::resolveContactHandle($params, $data['infData']['registrant']);
         if ($contact === false) {
-            return ['error' => 'COZA/GetContactDetails: unknown contact handle'];
+            // legacy contacts
+            return ['Registrant' => ['user_id' => 0, 'contact_id' => 0]];
         }
 
         return ['Registrant' => ['user_id' => $contact['user_id'], 'contact_id' => $contact['contact_id']]];

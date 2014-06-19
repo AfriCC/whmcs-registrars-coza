@@ -17,8 +17,6 @@ if (!defined('WHMCS')) die('This file cannot be accessed directly');
 
 class Factory
 {
-    private static $client;
-
     /**
      * connect to EPP server (OTE if requested)
      * @param array $params
@@ -39,7 +37,6 @@ class Factory
             'local_cert' => ((!empty($params['OTE']) && $params['OTE'] === 'on') ? null : $params['Certificate']),
         ]);
 
-        self::$client = $epp_client;
         return $epp_client;
     }
 
