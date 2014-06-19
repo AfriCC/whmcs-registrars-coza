@@ -15,7 +15,7 @@ function coza_addon_config()
         'name'          => 'CO.ZA EPP Messages',
         'description'   => 'This addon displays EPP poll messages.<br><a href="https://github.com/AfriCC/whmcs-registrars-coza">GitHub</a> | <a href="https://www.registry.net.za">Registry</a>',
         'author'        => '<a href="https://www.afri.cc">AfriCC</a>',
-        'version'       => '0.1.0',
+        'version'       => '0.1.1',
         'language'      => 'english',
         'fields'        => [],
     ];
@@ -46,12 +46,16 @@ CREATE TABLE IF NOT EXISTS `mod_coza_contact_deletequeue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 EOD;
 
-    $result = mysql_query($sql_structure);
-    if (!$result) {
-        return ['status' => 'error', 'description' => sprintf('There was a problem activating the module: %s', mysql_error())];
-    } else {
-        return ['status' => 'success', 'description' => 'Open module configuration for configuration options.'];
+    $queries = preg_split('/;/', $sql_structure, null, PREG_SPLIT_NO_EMPTY);
+    foreach ($queries as $query) {
+        $result = mysql_query(trim($query));
+
+        if (!$result) {
+            return ['status' => 'error', 'description' => sprintf('There was a problem activating the module: %s', mysql_error())];
+        }
     }
+
+    return ['status' => 'success', 'description' => 'Open module configuration for configuration options.'];
 }
 
 function coza_addon_deactivate()
@@ -61,12 +65,16 @@ DROP TABLE IF EXISTS `mod_coza_addon_messages`;
 DROP TABLE IF EXISTS `mod_coza_contact_deletequeue`;
 EOD;
 
-    $result = mysql_query($sql_query);
-    if (!$result) {
-        return ['status' => 'error', 'description' => sprintf('There was an error deactivating the module: %s', mysql_error())];
-    } else {
-        return ['status' => 'success', 'description' => 'Module has been deactivated.'];
+    $queries = preg_split('/;/', $sql_query, null, PREG_SPLIT_NO_EMPTY);
+    foreach ($queries as $query) {
+        $result = mysql_query(trim($query));
+
+        if (!$result) {
+            return ['status' => 'error', 'description' => sprintf('There was an error deactivating the module: %s', mysql_error())];
+        }
     }
+
+    return ['status' => 'success', 'description' => 'Module has been deactivated.'];
 }
 
 function coza_addon_output($vars)
