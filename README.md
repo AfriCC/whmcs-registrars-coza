@@ -93,12 +93,118 @@ MAILTO=hostmaster@YOURDOMAIN.COM
 
 ### Language Overrides
 
-llll
+It is highly recommended to add the following (or similar) in your lanuage overrides
+(e.g. /lang/overrides/english.php)
+
+```php
+$_LANG['domainregisternsreg'] = 'Create a Glue Record';
+$_LANG['domainregisternsdel'] = 'Delete a Glue Record';
+$_LANG['domainregisternsmod'] = 'Modify a Glue Record';
+$_LANG['domainregisterns'] = 'Glue Records';
+$_LANG['domainregisternsexplanation'] = 'Required if a domain below the same zone is used as nameserver (eg. NS1.yourdomain.co.za, NS2.yourdomain.co.za).';
+$_LANG['cartnameserversdesc'] = '<p>If you want to use custom nameservers then enter them below. By default, new domains will use our nameservers for hosting on our network.</p><p>After domain registration you will also be able to create <em>glue records</em>.</p>';
+$_LANG['domainnsexp'] = '<p>You can change where your domain points to here. Please be aware changes can take up to 24 hours to propogate.</p><p>Please go to "Management Tools" » "Glue Records" to delete or create Glue Records</p>';
+$_LANG['domaincontactchoose'] = 'Current Contact';
+```
 
 
 ### Templates
 
-llll
+#### clientareadomaincontactinfo.tpl
+
+will hide the custom-whois form in favor of a consistent user-/contactid:
+
+```
+SEARCH:
+<p><label class="full control-label"><input type="radio" class="radio inline" name="wc[{$contactdetail}]" id="{$contactdetail}1" value="contact" onclick="usedefaultwhois(id)"{if $defaultns} checked{/if} /> {$LANG.domaincontactusexisting}</label></p>
+
+REPLACE:
+{if $domain|regex_replace:"/^([^\.]+\.)/":"" eq "co.za"}
+<input type="hidden" name="wc[{$contactdetail}]" id="{$contactdetail}1" value="contact">
+{else}
+<p><label class="full control-label"><input type="radio" class="radio inline" name="wc[{$contactdetail}]" id="{$contactdetail}1" value="contact" onclick="usedefaultwhois(id)"{if $defaultns} checked{/if} /> {$LANG.domaincontactusexisting}</label></p>
+{/if}
+```
+
+```
+SEARCH:
+<option value="u{$clientsdetails.userid}">{$LANG.domaincontactprimary}</option>
+
+REPLACE:
+<option value="u{$clientsdetails.userid}" {if $contactdetails.Registrant.user_id eq $clientsdetails.userid}selected{/if}>{$LANG.domaincontactprimary}</option>
+```
+
+```
+SEARCH:
+<option value="c{$contact.id}">{$contact.name}</option>
+
+REPLACE:
+<option value="c{$contact.id}" {if $contactdetails.Registrant.contact_id eq $contact.id}selected{/if}>{$contact.name}</option>
+```
+
+```
+SEARCH:
+<p><label class="full control-label"><input type="radio" class="radio inline" name="wc[{$contactdetail}]" id="{$contactdetail}2" value="custom" onclick="usecustomwhois(id)"{if !$defaultns} checked{/if} /> {$LANG.domaincontactusecustom}</label></p>
+<fieldset>
+(...)
+</fieldset>
+
+ADD BEFORE:
+{if $domain|regex_replace:"/^([^\.]+\.)/":"" neq "co.za"}
+
+ADD AFTER:
+{/if}
+```
+
+
+#### clientareadomaindetails.tpl
+
+disables the input for glue records to force users to use the "Glue Record"
+panel and therfore not screw up with records.
+
+```
+SEARCH:
+<input class="input-xlarge domnsinputs" id="ns1" name="ns1" type="text" value="{$ns1}" />
+<input class="input-xlarge domnsinputs" id="ns2" name="ns2" type="text" value="{$ns2}" />
+<input class="input-xlarge domnsinputs" id="ns3" name="ns3" type="text" value="{$ns3}" />
+<input class="input-xlarge domnsinputs" id="ns4" name="ns4" type="text" value="{$ns4}" />
+<input class="input-xlarge domnsinputs" id="ns5" name="ns5" type="text" value="{$ns5}" />
+
+REPLACE:
+<input class="input-xlarge domnsinputs" id="ns1" name="ns1" type="text" value="{$ns1}" {if $ns1|replace:$domain:'' neq $ns1}disabled{/if} />
+<input class="input-xlarge domnsinputs" id="ns2" name="ns2" type="text" value="{$ns2}" {if $ns2|replace:$domain:'' neq $ns2}disabled{/if} />
+<input class="input-xlarge domnsinputs" id="ns3" name="ns3" type="text" value="{$ns3}" {if $ns3|replace:$domain:'' neq $ns3}disabled{/if} />
+<input class="input-xlarge domnsinputs" id="ns4" name="ns4" type="text" value="{$ns4}" {if $ns4|replace:$domain:'' neq $ns4}disabled{/if} />
+<input class="input-xlarge domnsinputs" id="ns5" name="ns5" type="text" value="{$ns5}" {if $ns5|replace:$domain:'' neq $ns5}disabled{/if} />
+```
+
+
+#### clientareadomainregisterns.tpl
+
+Add multiple IP inputs to allow round-robin records + disable "modify" glue records
+as currently not supported by module.
+
+```
+SEARCH:
+<input type="text" name="ipaddress" id="ip1" />
+
+REPLACE:
+<input type="text" name="ipaddress[]" id="ip1" />
+<input type="text" name="ipaddress[]" id="ip2" />
+<input type="text" name="ipaddress[]" id="ip3" />
+<input type="text" name="ipaddress[]" id="ip4" />
+<input type="text" name="ipaddress[]" id="ip5" />
+```
+
+```
+SEARCH:
+<input type="hidden" name="sub" value="modify" />
+
+SURROUND BY:
+{if $domain|regex_replace:"/^([^\.]+\.)/":"" neq "co.za"}
+
+{/if}
+```
 
 
 Changelog
