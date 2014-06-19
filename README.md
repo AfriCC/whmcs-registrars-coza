@@ -36,18 +36,16 @@ meaningful branchname, issue pull request with thus branchname)!
 Features
 --------
 
-* Consistent Contact Handles based on WHMCS User/Contact base
-    * update hooks, e.g. mass update contacts are now possible
-* Advanced TransferSync
-    * delete registry provisioned contact handle after creating own handle
-    * apply nameservers
-* Advanced Sync
-    * change autorenewal status of domains
-* Glue Records
+* consistent contact handles based on user base of WHMCS
+* contact update hooks, e.g. as soon as a client changes his details, all
+domains mapped to that contact will be update as well
+* advanced transfersync cleanups (no dead contact handles, applies contact + ns as given)
+* glue records
     * creation + deletion
-    * mix with nameservers with glue-records
+    * mix host names with glue-records
+    * round-robin records for glue-records
+    * IPv6 glue-records
 * OTE integration (auto masks co.za with test zone)
-    * do testing before going live
 
 
 Requirements
@@ -68,14 +66,16 @@ Installation
 
 ### Upload
 
-Upload everything inside the "upload" folder (excluding the folder itself)
+Upload everything inside the "*upload*" folder (excluding the folder itself)
 directly into your WHMCS installation.
 
 
 ### Activate
 
 1) Setup -> Products/Services -> Domain Registrars (Activate + Configure **CO.ZA**)
+
 2) Setup -> Addon Modules (Activate + Configure **CO.ZA EPP Messages**)
+
 3) Setup -> Staff Management -> Administrator Roles -> Edit (enable **CO.ZA Balance**)
 
 
