@@ -30,7 +30,7 @@ class Factory
             'host'       => ((!empty($params['OTE']) && $params['OTE'] === 'on') ? 'regphase3.dnservices.co.za' : 'epp.coza.net.za'),
             'port'       => 3121,
             'username'   => self::getRegistrarId($params),
-            'password'   => ((!empty($params['OTE']) && $params['OTE'] === 'on') ? $params['TestPassword'] : $params['TestPassword']),
+            'password'   => ((!empty($params['OTE']) && $params['OTE'] === 'on') ? $params['TestPassword'] : $params['Password']),
             'services'   => [
                 'urn:ietf:params:xml:ns:domain-1.0',
                 'urn:ietf:params:xml:ns:contact-1.0'
