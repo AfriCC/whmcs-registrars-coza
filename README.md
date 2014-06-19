@@ -11,6 +11,7 @@ registrar modules.
 Released under the GPLv3 License, feel free to contribute (fork, create
 meaningful branchname, issue pull request with thus branchname)!
 
+
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [whmcs-registrars-coza](#user-content-whmcs-registrars-coza)
@@ -23,6 +24,9 @@ meaningful branchname, issue pull request with thus branchname)!
         - [Cronjob](#user-content-cronjob)
         - [Language Overrides](#user-content-language-overrides)
         - [Templates](#user-content-templates)
+            - [clientareadomaincontactinfo.tpl](#user-content-clientareadomaincontactinfotpl)
+            - [clientareadomaindetails.tpl](#user-content-clientareadomaindetailstpl)
+            - [clientareadomainregisterns.tpl](#user-content-clientareadomainregisternstpl)
     - [Changelog](#user-content-changelog)
     - [Credits](#user-content-credits)
     - [Acknowledgments](#user-content-acknowledgments)
@@ -70,7 +74,9 @@ directly into your WHMCS installation.
 
 ### Activate
 
-
+1) Setup -> Products/Services -> Domain Registrars (Activate + Configure **CO.ZA**)
+2) Setup -> Addon Modules (Activate + Configure **CO.ZA EPP Messages**)
+3) Setup -> Staff Management -> Administrator Roles -> Edit (enable **CO.ZA Balance**)
 
 
 ### Config
@@ -85,8 +91,11 @@ in */etc/cron.d/whmcs*
 ```
 MAILTO=hostmaster@YOURDOMAIN.COM
 
+# default whmcs cron
 43 */4 * * * www-data cd /var/www/whmcs/crons; php -q domainsync.php > /dev/null
+# epp poll messages
 13 * * * *   www-data php -q /var/www/whmcs/crons/cozapoll.php > /dev/null
+# cleans up after a domain transfer-in
 33 * * * *   www-data php -q /var/www/whmcs/crons/cozacleanup.php > /dev/null
 ```
 
@@ -94,7 +103,7 @@ MAILTO=hostmaster@YOURDOMAIN.COM
 ### Language Overrides
 
 It is highly recommended to add the following (or similar) in your lanuage overrides
-(e.g. /lang/overrides/english.php)
+(e.g. */lang/overrides/english.php*)
 
 ```php
 $_LANG['domainregisternsreg'] = 'Create a Glue Record';
