@@ -1,4 +1,4 @@
-[http://img.shields.io/badge/WHMCS-AppStore-blue.svg](http://whmcs.com/appstore/2706/WHMCS-Registrars-COZA.html)
+![http://whmcs.com/appstore/2706/WHMCS-Registrars-COZA.html](http://img.shields.io/badge/WHMCS-AppStore-blue.svg "Official Community App")
 
 whmcs-registrars-coza
 =====================
