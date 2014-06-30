@@ -1,3 +1,5 @@
+[http://img.shields.io/badge/WHMCS-AppStore-blue.svg](http://whmcs.com/appstore/2706/WHMCS-Registrars-COZA.html)
+
 whmcs-registrars-coza
 =====================
 
