@@ -127,14 +127,15 @@ function coza_GetNameservers($params)
 function coza_SaveNameservers($params)
 {
     $old_records = $glue_records = $ns_add = $ns_rem = [];
-    $epp_client = \COZA\Factory::build($params);
+    $epp_client  = \COZA\Factory::build($params);
+    $domain      = \COZA\Factory::getDomain($params);
 
     try {
         $epp_client->connect();
 
         // get a list of nameservers first, we need to ignore glue records
         $frame = new \AfriCC\EPP\Frame\Command\Info\Domain;
-        $frame->setDomain(\COZA\Factory::getDomain($params));
+        $frame->setDomain($domain);
 
         $response = $epp_client->request($frame);
         unset($frame);
@@ -159,7 +160,9 @@ function coza_SaveNameservers($params)
             if (!empty($params['OTE']) && $params['OTE'] === 'on') {
                 $host_attr['hostName'] = str_replace('test.dnservices.co.za', 'co.za', $host_attr['hostName']);
             }
-            if (!empty($host_attr['hostAddr'])) {
+            
+            // only if it is a glue record within this domain
+            if (!empty($host_attr['hostAddr']) && preg_match('/' . preg_quote($domain, '/') . '$/i', $host_attr['hostName'])) {
                 $glue_records[$host_attr['hostName']] = true;
             } else {
                 $old_records[$host_attr['hostName']] = true;
@@ -173,6 +176,8 @@ function coza_SaveNameservers($params)
                 continue;
             }
             // skip glue records
+            // the reason for this is, that we need to force the user to use the actual
+            // glue record api (not using it will cause an error here anyway)
             elseif (isset($glue_records[$params['ns' . $i]])) {
                 continue;
             }
